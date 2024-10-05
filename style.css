@@ -25,3 +25,10 @@ body {
 #sheet-list button:hover {
     background-color: #004d40;
 }
+
+/* Styling for file input */
+#fileInput {
+    padding: 10px;
+    margin-bottom: 10px;
+    width: 300px;
+}
