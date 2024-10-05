@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Excel Sheet</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Select Excel File and Sheet</h1>
+
+        <!-- Input for file URL -->
+        <input type="file" id="fileInput" accept=".xlsx, .xls" />
+        <div id="sheet-list"></div>
+    </div>
+
+    <!-- XLSX library for Excel file processing -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+    <!-- Custom script to handle file processing -->
+    <script src="index.js"></script>
+</body>
+</html>
