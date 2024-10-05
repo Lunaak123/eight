@@ -1,13 +1,16 @@
-document.getElementById('fileInput').addEventListener('change', handleFile);
+document.getElementById('loadFile').addEventListener('click', handleFile);
 
-function handleFile(e) {
-    const file = e.target.files[0];
-    if (!file) return;
+async function handleFile() {
+    const fileUrl = document.getElementById('fileInput').value;
+    if (!fileUrl) {
+        alert("Please enter a valid URL.");
+        return;
+    }
 
-    const reader = new FileReader();
-    reader.onload = function(event) {
-        const data = new Uint8Array(event.target.result);
-        const workbook = XLSX.read(data, { type: 'array' });
+    try {
+        const response = await fetch(fileUrl);
+        const arrayBuffer = await response.arrayBuffer();
+        const workbook = XLSX.read(new Uint8Array(arrayBuffer), { type: 'array' });
 
         const sheetList = document.getElementById('sheet-list');
         sheetList.innerHTML = ''; // Clear any existing sheet list
@@ -16,12 +19,13 @@ function handleFile(e) {
             const button = document.createElement('button');
             button.textContent = sheetName;
             button.addEventListener('click', () => {
-                const fileUrl = URL.createObjectURL(file);
                 const sheetUrl = `sheet.html?fileUrl=${encodeURIComponent(fileUrl)}&sheetName=${encodeURIComponent(sheetName)}`;
                 window.location.href = sheetUrl;
             });
             sheetList.appendChild(button);
         });
-    };
-    reader.readAsArrayBuffer(file);
+    } catch (error) {
+        console.error("Error loading the file:", error);
+        alert("Failed to load the Excel file. Please check the URL.");
+    }
 }
